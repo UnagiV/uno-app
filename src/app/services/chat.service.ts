@@ -27,7 +27,6 @@ export class ChatService {
     this.connection.on("ReceiveOne", (user, message) => {
       this.mapReceivedMessage(user, message);
     });
-    this.start();
   }
 
   // Strart the connection
