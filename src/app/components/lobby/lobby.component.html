@@ -1,1 +1,1 @@
-<button (click)="connect()">Connecter au serveur</button>
+<button class="btn-connect" *ngIf="!this.isConnected" (click)="connect()">Connecter au serveur</button>

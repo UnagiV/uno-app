@@ -11,11 +11,11 @@ export class AppComponent implements OnInit {
   constructor(private chatService: ChatService) {}
 
   ngOnInit(): void {
-    this.chatService
-      .retrieveMappedObject()
-      .subscribe((receivedObj: MessageDto) => {
-        this.addToInbox(receivedObj);
-      }); // calls the service method to get the new messages sent
+    // this.chatService
+    //   .retrieveMappedObject()
+    //   .subscribe((receivedObj: MessageDto) => {
+    //     this.addToInbox(receivedObj);
+    //   }); // calls the service method to get the new messages sent
   }
 
   msgDto: MessageDto = new MessageDto();

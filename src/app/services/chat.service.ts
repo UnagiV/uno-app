@@ -17,15 +17,15 @@ export class ChatService {
     .build();
   readonly POST_URL = "http://localhost:5000/api/chat/send";
 
-  private receivedMessageObject: MessageDto = new MessageDto();
-  private sharedObj = new Subject<MessageDto>();
+  private sharedObj = new Subject<boolean>();
 
   constructor(private http: HttpClient) {
     this.connection.onclose(async () => {
       await this.start();
     });
-    this.connection.on("ReceiveOne", (user, message) => {
-      this.mapReceivedMessage(user, message);
+    this.connection.on("ConnectedState", (isConnected) => {
+      console.log(isConnected);
+      this.receiveConnectedState(isConnected);
     });
   }
 
@@ -40,10 +40,8 @@ export class ChatService {
     }
   }
 
-  private mapReceivedMessage(user: string, message: string): void {
-    this.receivedMessageObject.user = user;
-    this.receivedMessageObject.msgText = message;
-    this.sharedObj.next(this.receivedMessageObject);
+  private receiveConnectedState(isConnected : boolean):void{
+    this.sharedObj.next(isConnected);
   }
 
   /* ****************************** Public Mehods **************************************** */
@@ -58,7 +56,7 @@ export class ChatService {
       .catch((err) => console.error(err)); // This can invoke the server method named as "SendMethod1" directly.
   }
 
-  public retrieveMappedObject(): Observable<MessageDto> {
+  public retrieveConnectedState(): Observable<boolean> {
     return this.sharedObj.asObservable();
   }
 }
