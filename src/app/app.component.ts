@@ -8,8 +8,8 @@ import { MessageDto } from "src/app/Dto/MessageDto";
   styleUrls: ["./app.component.scss"],
 })
 export class AppComponent implements OnInit {
-  constructor(private chatService: ChatService) {}
-
+  constructor() {}
+  // private chatService: ChatService (dans le constructor)
   ngOnInit(): void {
     // this.chatService
     //   .retrieveMappedObject()
@@ -18,24 +18,24 @@ export class AppComponent implements OnInit {
     //   }); // calls the service method to get the new messages sent
   }
 
-  msgDto: MessageDto = new MessageDto();
-  msgInboxArray: MessageDto[] = [];
+  // msgDto: MessageDto = new MessageDto();
+  // msgInboxArray: MessageDto[] = [];
 
-  send(): void {
-    if (this.msgDto) {
-      if (this.msgDto.user.length == 0 || this.msgDto.user.length == 0) {
-        window.alert("Both fields are required.");
-        return;
-      } else {
-        this.chatService.broadcastMessage(this.msgDto); // Send the message via a service
-      }
-    }
-  }
+  // send(): void {
+  //   if (this.msgDto) {
+  //     if (this.msgDto.user.length == 0 || this.msgDto.user.length == 0) {
+  //       window.alert("Both fields are required.");
+  //       return;
+  //     } else {
+  //       this.chatService.broadcastMessage(this.msgDto); // Send the message via a service
+  //     }
+  //   }
+  // }
 
-  addToInbox(obj: MessageDto) {
-    let newObj = new MessageDto();
-    newObj.user = obj.user;
-    newObj.msgText = obj.msgText;
-    this.msgInboxArray.push(newObj);
-  }
+  // addToInbox(obj: MessageDto) {
+  //   let newObj = new MessageDto();
+  //   newObj.user = obj.user;
+  //   newObj.msgText = obj.msgText;
+  //   this.msgInboxArray.push(newObj);
+  // }
 }
