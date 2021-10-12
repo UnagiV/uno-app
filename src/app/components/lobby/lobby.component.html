@@ -1,1 +1,10 @@
-<button mat-raised-button color="primary" class="btn-connect" *ngIf="!this.isConnected" (click)="connect()">Connecter au serveur</button>
+<button mat-raised-button color="primary" class="centered" *ngIf="!this.isConnected" (click)="connect()">Connecter au serveur</button>
+
+
+<div *ngIf="this.hasEnoughPlayers" class="centered">
+    <h1>Connexion :</h1>
+    <label for="name">Name: </label>
+    <input id="name" type="text" [formControl]="name">
+    <br/>
+    <button mat-raised-button color="primary" (click)="launchGame()">Valider</button>
+</div>

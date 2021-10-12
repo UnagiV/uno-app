@@ -17,15 +17,22 @@ export class ChatService {
     .build();
   // readonly POST_URL = "http://localhost:5000/api/chat/send";
 
-  private sharedObj = new Subject<boolean>();
+  private sharedConnectedState = new Subject<boolean>();
+  private sharedHasEnoughPlayers = new Subject<boolean>();
+  private sharedPlayerName = new Subject<string>();
 
   constructor(private http: HttpClient) {
     this.connection.onclose(async () => {
       await this.start();
     });
     this.connection.on("ConnectedState", (isConnected) => {
-      console.log(isConnected);
       this.receiveConnectedState(isConnected);
+    });
+    this.connection.on("HasEnoughPlayers", (hasEnoughPlayers) => {
+      this.receiveHasEnoughPlayers(hasEnoughPlayers);
+    });
+    this.connection.on("PlayerName", (playerName) => {
+      this.receivePlayerName(playerName);
     });
   }
 
@@ -41,10 +48,22 @@ export class ChatService {
   }
 
   private receiveConnectedState(isConnected : boolean):void{
-    this.sharedObj.next(isConnected);
+    this.sharedConnectedState.next(isConnected);
+  }
+
+  private receiveHasEnoughPlayers(hasEnoughPlayers:boolean):void{
+    this.sharedHasEnoughPlayers.next(hasEnoughPlayers);
+  }
+
+  private receivePlayerName(playerName:string):void{
+    this.sharedPlayerName.next(playerName);
   }
 
   /* ****************************** Public Mehods **************************************** */
+
+  public sendNameToPlayers(name: string){
+    this.connection.invoke("SendName", name).catch((err) => console.error(err));
+  }
 
   // // Calls the controller method
   // public broadcastMessage(msgDto: any) {
@@ -57,6 +76,14 @@ export class ChatService {
   // }
 
   public retrieveConnectedState(): Observable<boolean> {
-    return this.sharedObj.asObservable();
+    return this.sharedConnectedState.asObservable();
+  }
+
+  public retrieveHasEnoughPlayers(): Observable<boolean> {
+    return this.sharedHasEnoughPlayers.asObservable();
+  }
+
+  public retrievePlayerName(): Observable<string> {
+    return this.sharedPlayerName.asObservable();
   }
 }
