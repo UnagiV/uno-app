@@ -1,0 +1,7 @@
+
+<h1>Joueurs :</h1>
+<ul>    
+    <li *ngFor="let playerName of this.playerList">{{ playerName }}</li>
+</ul>
+
+<button mat-raised-button color="primary" [disabled]="!this.isYourTurn" (click)="passToNextPlayer()">Passer</button>

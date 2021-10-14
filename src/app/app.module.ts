@@ -6,12 +6,13 @@ import { BrowserModule } from "@angular/platform-browser";
 import { AppComponent } from "./app.component";
 import { AppRoutingModule } from "./app-routing.module";
 import { LobbyComponent } from './components/lobby/lobby.component';
-import {MatButtonModule} from '@angular/material/button';
-import {MatIconModule} from '@angular/material/icon';
+import { GameBoardComponent } from "./components/game-board/game-board.component";
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
-  declarations: [AppComponent, LobbyComponent],
+  declarations: [AppComponent, LobbyComponent, GameBoardComponent],
   imports: [
     BrowserModule,
     FormsModule,

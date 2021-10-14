@@ -20,6 +20,7 @@ export class ChatService {
   private sharedConnectedState = new Subject<boolean>();
   private sharedHasEnoughPlayers = new Subject<boolean>();
   private sharedPlayerName = new Subject<string>();
+  private sharedPlayerNameTurn = new Subject<string>();
 
   constructor(private http: HttpClient) {
     this.connection.onclose(async () => {
@@ -34,6 +35,9 @@ export class ChatService {
     this.connection.on("PlayerName", (playerName) => {
       this.receivePlayerName(playerName);
     });
+    this.connection.on("PlayerNameTurn", (playerName) => {
+      this.receivePlayerNameTurn(playerName);
+    });
   }
 
   // Strart the connection
@@ -47,6 +51,17 @@ export class ChatService {
     }
   }
 
+  
+  public sendNameToPlayers(name: string){
+    this.connection.invoke("SendName", name).catch((err) => console.error(err));
+  }
+
+  public passTurn(){
+    this.connection.invoke("PassTurn").catch((err) => console.error(err));
+  }
+
+  // Receives
+
   private receiveConnectedState(isConnected : boolean):void{
     this.sharedConnectedState.next(isConnected);
   }
@@ -58,22 +73,12 @@ export class ChatService {
   private receivePlayerName(playerName:string):void{
     this.sharedPlayerName.next(playerName);
   }
-
-  /* ****************************** Public Mehods **************************************** */
-
-  public sendNameToPlayers(name: string){
-    this.connection.invoke("SendName", name).catch((err) => console.error(err));
+  
+  private receivePlayerNameTurn(playerName:string):void{
+    this.sharedPlayerNameTurn.next(playerName);
   }
 
-  // // Calls the controller method
-  // public broadcastMessage(msgDto: any) {
-  //   // this.http
-  //   //   .post(this.POST_URL, msgDto)
-  //   //   .subscribe((data) => console.log(data));
-  //   this.connection
-  //     .invoke("SendMessage1", msgDto.user, msgDto.msgText)
-  //     .catch((err) => console.error(err)); // This can invoke the server method named as "SendMethod1" directly.
-  // }
+  // Retrieves 
 
   public retrieveConnectedState(): Observable<boolean> {
     return this.sharedConnectedState.asObservable();
@@ -85,5 +90,9 @@ export class ChatService {
 
   public retrievePlayerName(): Observable<string> {
     return this.sharedPlayerName.asObservable();
+  }
+
+  public retrievePlayerNameTurn(): Observable<string> {
+    return this.sharedPlayerNameTurn.asObservable();
   }
 }
