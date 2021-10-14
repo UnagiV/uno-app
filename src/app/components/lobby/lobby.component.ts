@@ -12,6 +12,7 @@ export class LobbyComponent implements OnInit {
   public isConnected:boolean = false;
   public hasEnoughPlayers:boolean = false;
   public playerList:string[] = [];
+  public nameSent:boolean = false;
   constructor(private chatService: ChatService) {}
 
   ngOnInit(): void {
@@ -28,7 +29,10 @@ export class LobbyComponent implements OnInit {
   }
 
   public launchGame(){
-    this.chatService.sendNameToPlayers(this.name.value);
+    if(this.name.value != ""){
+      this.chatService.sendNameToPlayers(this.name.value);
+      this.nameSent = true;
+    }
   }
 
   public connect(): void {
