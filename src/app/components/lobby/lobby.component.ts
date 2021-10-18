@@ -30,6 +30,7 @@ export class LobbyComponent implements OnInit {
     })
     this.chatService.retrievePlayerName().subscribe((playerName : string) => {
       this.playerList.push(playerName);
+      
       console.log(this.playerList);
       if(this.playerList.length == 4){
         this.router.navigate(['gameboard'],{state: {playerList:this.playerList, yourName:this.name.value}});

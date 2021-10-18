@@ -1,7 +1,4 @@
 
-<h1>Joueurs :</h1>
-<ul>    
-    <li *ngFor="let playerName of this.playerList">{{ playerName }}</li>
-</ul>
+<app-player-panel *ngFor="let playerName of this.playerList" [name]="playerName" [num]="this.playerList.indexOf(playerName)+1" [order]="this.order" [yourNum]="this.yourNum" [isYourTurn]="this.isYourTurn" (passTurnChild)="this.passToNextPlayer()"></app-player-panel>
 
-<button mat-raised-button color="primary" [disabled]="!this.isYourTurn" (click)="passToNextPlayer()">Passer</button>
+
