@@ -30,6 +30,14 @@ export class GameBoardComponent implements OnInit {
         this.isYourTurn = true;
       }
     })
+
+    this.chatService.retrieveChooseBlue().subscribe((blueList : number[]) => {
+      console.log(blueList);
+    });
+
+    if(this.yourNum == 1){
+      this.chatService.createGame();
+    }
   }
 
   public passToNextPlayer(){

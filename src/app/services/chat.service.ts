@@ -1,7 +1,6 @@
 import { Injectable, OnInit } from "@angular/core";
 import * as signalR from "@microsoft/signalr"; // import signalR
 import { HttpClient } from "@angular/common/http";
-import { MessageDto } from "../Dto/MessageDto";
 import { Observable, Subject } from "rxjs";
 
 @Injectable({
@@ -21,6 +20,7 @@ export class ChatService {
   private sharedHasEnoughPlayers = new Subject<boolean>();
   private sharedPlayerName = new Subject<string>();
   private sharedPlayerNameTurn = new Subject<string>();
+  private sharedChooseBlue= new Subject<number[]>();
 
   constructor(private http: HttpClient) {
     this.connection.onclose(async () => {
@@ -37,6 +37,9 @@ export class ChatService {
     });
     this.connection.on("PlayerNameTurn", (playerName) => {
       this.receivePlayerNameTurn(playerName);
+    });
+    this.connection.on("ChooseBlue", (blueList) => {
+      this.receiveChooseBlue(blueList);
     });
   }
 
@@ -56,8 +59,11 @@ export class ChatService {
     this.connection.invoke("SendName", name).catch((err) => console.error(err));
   }
 
-  public passTurn(){
+  public createGame(){
+    this.connection.invoke("CreateGame").catch((err) => console.error(err));
+  }
 
+  public passTurn(){
     this.connection.invoke("PassTurn").catch((err) => console.error(err));
   }
 
@@ -79,6 +85,10 @@ export class ChatService {
     this.sharedPlayerNameTurn.next(playerName);
   }
 
+  private receiveChooseBlue(blueList:number[]):void{
+    this.sharedChooseBlue.next(blueList);
+  }
+
   // Retrieves 
 
   public retrieveConnectedState(): Observable<boolean> {
@@ -95,5 +105,9 @@ export class ChatService {
 
   public retrievePlayerNameTurn(): Observable<string> {
     return this.sharedPlayerNameTurn.asObservable();
+  }
+
+  public retrieveChooseBlue(): Observable<number[]>{
+    return this.sharedChooseBlue.asObservable();
   }
 }
