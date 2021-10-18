@@ -1,0 +1,41 @@
+.player-panel-block{
+    margin:10px;
+    width:300px;
+    height:150px;
+}
+
+.player1{
+    position: absolute;
+    bottom: 0%;
+    left: 50%;
+    -ms-transform: translate(-50%, 0%);
+    transform: translate(-50%, 0%);
+    background-color:#a3ffbf;
+}
+
+.player2{
+    position: absolute;
+    top: 50%;
+    left: 0%;
+    -ms-transform: translate(0%, -50%);
+    transform: translate(0%, -50%);
+    background-color:#ff948c;
+}
+
+.player3{
+    position: absolute;
+    top: 0%;
+    left: 50%;
+    -ms-transform: translate(-50%, 0%);
+    transform: translate(-50%, 0%);
+    background-color:#ff948c;
+}
+
+.player4{
+    position: absolute;
+    top: 50%;
+    right:0%;
+    -ms-transform: translate(0%, -50%);
+    transform: translate(0%, -50%);
+    background-color:#ff948c;
+}

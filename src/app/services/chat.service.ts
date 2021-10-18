@@ -57,6 +57,7 @@ export class ChatService {
   }
 
   public passTurn(){
+
     this.connection.invoke("PassTurn").catch((err) => console.error(err));
   }
 
