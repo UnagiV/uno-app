@@ -1,0 +1,34 @@
+.choice-panel{
+    background-color:rgba(0,0,0,0.5);
+    height:100%;
+    width:100%;
+    z-index: 99 !important;
+}
+
+.cards{
+    width:max-content !important;
+}
+
+.choice-title{
+    top:15%;
+}
+
+.blue-card{
+    transition:0.2s;
+    border: 5px solid black;
+    border-radius: 5px;
+    background-color:blue;
+    color:black;
+    font-weight:bold;
+    font-size:20px;
+    text-align:center;
+    padding:110px 70px 110px 70px;
+    margin:5px;
+    display:inline-block;
+}
+
+.blue-card:hover{
+    transition:0.2s;
+    cursor:pointer;
+    background-color:#3333ff;
+}

@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core'; 
 import { Location } from '@angular/common';
 import { ChatService } from 'src/app/services/chat.service';
+import { maxcardinfo } from 'src/app/classes/maxcardinfo';
+import { player } from 'src/app/classes/player';
 
 @Component({
   selector: 'app-game-board',
@@ -14,10 +16,13 @@ export class GameBoardComponent implements OnInit {
   public isYourTurn:boolean = false;
   public yourNum:number;
   public order:number[];
+  public maxCardInfo:maxcardinfo;
+  public yourInfos:player;
 
   constructor(private location:Location,private chatService:ChatService) { }
 
   ngOnInit(): void {
+    this.yourInfos = new player();
     this.playerList = this.location.getState()["playerList"];
     this.name = this.location.getState()["yourName"];
     this.yourNum = this.playerList.indexOf(this.name)+1;
@@ -31,8 +36,8 @@ export class GameBoardComponent implements OnInit {
       }
     })
 
-    this.chatService.retrieveChooseBlue().subscribe((blueList : number[]) => {
-      console.log(blueList);
+    this.chatService.retrieveChooseCardMax().subscribe((maxCardInfo : maxcardinfo) => {
+      this.maxCardInfo = maxCardInfo;
     });
 
     if(this.yourNum == 1){
@@ -45,6 +50,10 @@ export class GameBoardComponent implements OnInit {
     this.chatService.passTurn();
   }
 
+  public sendMaxColor(params:object){
+    console.log(params)
+    //Ajouter l'appel de la fonction
+  }
 
   public calculateOrder(num):number[]{
     if(num == 1)
