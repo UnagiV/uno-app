@@ -14,10 +14,38 @@
 }
 
 .blue-card{
-    transition:0.2s;
-    border: 5px solid black;
-    border-radius: 5px;
     background-color:blue;
+}
+
+.blue-card:hover{
+    background-color:#3333ff;
+}
+
+.red-card{
+    background-color:red;
+}
+
+.red-card:hover{
+    background-color:#ff3333;
+}
+
+.green-card{
+    background-color:green;
+}
+
+.green-card:hover{
+    background-color:#339033;
+}
+
+.yellow-card{
+    background-color:#C9C900;
+}
+
+.yellow-card:hover{
+    background-color:#D0D033;
+}
+
+.card{
     color:black;
     font-weight:bold;
     font-size:20px;
@@ -25,10 +53,12 @@
     padding:110px 70px 110px 70px;
     margin:5px;
     display:inline-block;
+    transition:0.2s;
+    border: 5px solid black;
+    border-radius: 5px;
 }
 
-.blue-card:hover{
+.card:hover{
     transition:0.2s;
     cursor:pointer;
-    background-color:#3333ff;
 }

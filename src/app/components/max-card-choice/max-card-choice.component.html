@@ -1,6 +1,6 @@
 <div class="choice-panel centered">
     <h1 class="centered-horizontal choice-title">Choisissez une valeur maximale :</h1>
     <span class="centered cards">
-        <div (click)="sendChoice(this.maxCardInfo.color,num)" [ngClass]="{'blue-card':this.maxCardInfo.color == 'blue'}" *ngFor="let num of this.maxCardInfo.values">{{num}}</div>
+        <div (click)="sendChoice(this.maxCardInfo.color,num)" [ngClass]="{'blue-card':this.maxCardInfo.color == 'blue', 'red-card':this.maxCardInfo.color == 'red','green-card':this.maxCardInfo.color == 'green','yellow-card':this.maxCardInfo.color == 'yellow', 'card': true }" *ngFor="let num of this.maxCardInfo.values">{{num}}</div>
     </span>
 </div>

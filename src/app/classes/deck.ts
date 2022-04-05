@@ -1,9 +1,7 @@
 import { card } from "./card";
-import { color } from "./color";
 
 export class deck{
-    public color:color;
-    public cardList:card[];
+    public cardList:number[];
 
     constructor(){
         this.cardList = [];

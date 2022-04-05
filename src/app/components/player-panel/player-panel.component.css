@@ -39,3 +39,26 @@
     transform: translate(0%, -50%);
     background-color:#ff948c;
 }
+
+.infos{
+    margin: 2px;
+    padding:7px;
+    border-radius:3px;
+    border: 2px solid black;
+}
+
+.blue-info{
+    background-color:blue;
+}
+
+.red-info{
+    background-color:red;
+}
+
+.green-info{
+    background-color:green;
+}
+
+.yellow-info{
+    background-color:#C9C900;
+}
