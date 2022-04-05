@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { player } from 'src/app/classes/player';
 import * as internal from 'stream';
 
 @Component({
@@ -15,6 +16,7 @@ export class PlayerPanelComponent implements OnInit {
   @Input() order:number[];
   @Input() yourNum:number;
   @Input() isYourTurn:boolean;
+  @Input() yourInfos:player;
 
   @Output() passTurnChild = new EventEmitter<string>();
 

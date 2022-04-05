@@ -1,6 +1,14 @@
 <mat-card [ngClass]="{'player-panel-block' : true, 'player1' : this.num == order[0], 'player2' : this.num == order[1], 'player3' : this.num == order[2],'player4' : this.num == order[3] }">
-    <mat-card-title>Joueur {{this.num}} : {{this.name}} {{this.num == order[0] ? "(Vous)" : ""}}</mat-card-title>
-    <mat-card-actions>
+    <mat-card-title>Joueur {{this.num}} : {{this.name}} {{this.num == order[0] ? "(Vous)" : ""}}</mat-card-title> 
+
+      <div>
+        <span class="infos blue-info">{{this.yourInfos.blueLimit || 0}}</span>
+        <span class="infos red-info">{{this.yourInfos.redLimit || 0}}</span>
+        <span class="infos green-info">{{this.yourInfos.greenLimit || 0}}</span>
+        <span class="infos yellow-info">{{this.yourInfos.yellowLimit || 0}}</span>
+      </div>
+      
+    <mat-card-actions align="end">
       <button *ngIf="this.yourNum == this.num" mat-raised-button color="primary" [disabled]="!this.isYourTurn" (click)="this.passTurn()">Passer</button>
     </mat-card-actions>
   </mat-card>

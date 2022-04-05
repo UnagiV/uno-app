@@ -16,10 +16,11 @@ import { AppComponent } from "./app.component";
 import { LobbyComponent } from './components/lobby/lobby.component';
 import { GameBoardComponent } from "./components/game-board/game-board.component";
 import { PlayerPanelComponent } from './components/player-panel/player-panel.component';
+import { MaxCardChoiceComponent } from './components/max-card-choice/max-card-choice.component';
 
 
 @NgModule({
-  declarations: [AppComponent, LobbyComponent, GameBoardComponent, PlayerPanelComponent],
+  declarations: [AppComponent, LobbyComponent, GameBoardComponent, PlayerPanelComponent, MaxCardChoiceComponent],
   imports: [
     BrowserModule,
     FormsModule,

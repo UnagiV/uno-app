@@ -1,10 +1,5 @@
-enum color{
-    yellow,
-    red,
-    blue,
-    green,
-    neutral
-}
+import { color } from "./color";
+
 
 export class card {
     public color:color;

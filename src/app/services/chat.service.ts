@@ -2,6 +2,7 @@ import { Injectable, OnInit } from "@angular/core";
 import * as signalR from "@microsoft/signalr"; // import signalR
 import { HttpClient } from "@angular/common/http";
 import { Observable, Subject } from "rxjs";
+import { maxcardinfo } from "../classes/maxcardinfo";
 
 @Injectable({
   providedIn: "root",
@@ -20,7 +21,10 @@ export class ChatService {
   private sharedHasEnoughPlayers = new Subject<boolean>();
   private sharedPlayerName = new Subject<string>();
   private sharedPlayerNameTurn = new Subject<string>();
-  private sharedChooseBlue= new Subject<number[]>();
+  private sharedChooseCardMax= new Subject<maxcardinfo>();
+  private sharedAllColors = new Subject<{name: string,color:string, value:number}>();
+  private sharedAllCards = new Subject<{names:string[],cards:number[][]}>();
+
 
   constructor(private http: HttpClient) {
     this.connection.onclose(async () => {
@@ -38,8 +42,14 @@ export class ChatService {
     this.connection.on("PlayerNameTurn", (playerName) => {
       this.receivePlayerNameTurn(playerName);
     });
-    this.connection.on("ChooseBlue", (blueList) => {
-      this.receiveChooseBlue(blueList);
+    this.connection.on("ChooseCardMax", (color, values) => {
+      this.receiveChooseCardMax(color, values);
+    });
+    this.connection.on("SendColorsToAll", (name, color, value) => {
+      this.receiveSendColorsToAll(name, color, value);
+    });
+    this.connection.on("SendCardsToAll", (names, cards) => {
+      this.receiveSendCardsToAll(names, cards);
     });
   }
 
@@ -47,7 +57,6 @@ export class ChatService {
   public async start() {
     try {
       await this.connection.start();
-      console.log("connected");
     } catch (err) {
       console.log(err);
       setTimeout(() => this.start(), 5000);
@@ -65,6 +74,11 @@ export class ChatService {
 
   public passTurn(){
     this.connection.invoke("PassTurn").catch((err) => console.error(err));
+  }
+
+  //Ajouter le invoke pour le choix du bleu
+  public sendMaxColorInfos(params){
+    this.connection.invoke("ManageMaxColors",params.color,params.choice).catch((err) => console.error(err));
   }
 
   // Receives
@@ -85,8 +99,19 @@ export class ChatService {
     this.sharedPlayerNameTurn.next(playerName);
   }
 
-  private receiveChooseBlue(blueList:number[]):void{
-    this.sharedChooseBlue.next(blueList);
+  private receiveChooseCardMax(color:string,values:number[]):void{
+    let tempCardInfo:maxcardinfo = new maxcardinfo();
+    tempCardInfo.color = color;
+    tempCardInfo.values = values;
+    this.sharedChooseCardMax.next(tempCardInfo);
+  }
+
+  receiveSendColorsToAll(name:string,color:string,value:number):void{
+    this.sharedAllColors.next({name,color,value});
+  }
+
+  receiveSendCardsToAll(names:string[],cards:number[][]):void{
+    this.sharedAllCards.next({names,cards});
   }
 
   // Retrieves 
@@ -107,7 +132,15 @@ export class ChatService {
     return this.sharedPlayerNameTurn.asObservable();
   }
 
-  public retrieveChooseBlue(): Observable<number[]>{
-    return this.sharedChooseBlue.asObservable();
+  public retrieveChooseCardMax(): Observable<maxcardinfo>{
+    return this.sharedChooseCardMax.asObservable();
+  }
+
+  public retrieveSendColorsToAll(): Observable<{name: string,color:string, value:number}>{
+    return this.sharedAllColors.asObservable();
+  }
+
+  public retrieveSendCardsToAll(): Observable<{names:string[],cards:number[][]}>{
+    return this.sharedAllCards.asObservable();
   }
 }
